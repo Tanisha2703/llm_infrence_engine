@@ -27,7 +27,8 @@ from src.benchmarks.metrics import print_table
 
 MODEL_PATH = "models/tinyllama-1.1b-Q4_K_M.gguf"
 N_THREADS = 4
-MAX_TOKENS = 40
+MAX_TOKENS = 128
+N_CTX = 2048
 GAMMA = 5  # speculation window
 
 PROMPTS = [
@@ -77,7 +78,7 @@ def main() -> None:
     print(f"Prompts    : {len(PROMPTS)}")
     print()
 
-    engine = InferenceEngine(MODEL_PATH, n_ctx=512, n_threads=N_THREADS)
+    engine = InferenceEngine(MODEL_PATH, n_ctx=N_CTX, n_threads=N_THREADS)
 
     print("Baseline (token-by-token) …")
     base_results = _run_baseline(engine, PROMPTS)

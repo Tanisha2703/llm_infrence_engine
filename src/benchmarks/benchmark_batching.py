@@ -31,10 +31,11 @@ from src.benchmarks.metrics import print_table
 
 MODEL_PATH = "models/tinyllama-1.1b-Q4_K_M.gguf"
 N_THREADS = 4
-MAX_TOKENS = 32
+MAX_TOKENS = 128
+N_CTX = 2048
 N_REQUESTS = 8  # total requests in the burst
 BATCH_SIZE = 4
-BATCH_TIMEOUT = 0.3  # seconds
+BATCH_TIMEOUT = 0.5  # seconds
 
 PROMPTS = [
     "What is the speed of light?",
@@ -103,7 +104,7 @@ def main() -> None:
     print(f"Max tokens : {MAX_TOKENS}")
     print()
 
-    engine = InferenceEngine(MODEL_PATH, n_ctx=512, n_threads=N_THREADS)
+    engine = InferenceEngine(MODEL_PATH, n_ctx=N_CTX, n_threads=N_THREADS)
     infer_fn = engine.generate
 
     schedulers = [

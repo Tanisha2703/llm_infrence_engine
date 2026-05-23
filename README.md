@@ -14,15 +14,18 @@
 
 This project implements four major LLM inference optimizations used in modern serving engines.
 
-| Technique            | Metric        | Improvement          |
-|----------------------|---------------|----------------------|
-| Quantization         | TTFT          | **5.58× faster**     |
-| Quantization         | TPS           | **7.3× faster**      |
-| KV cache             | TTFT          | **72% reduction**    |
-| Continuous batching  | Wait time     | **44% reduction**    |
-| Speculative decoding | TTFT          | **5.8× faster**      |
+| Technique            | Metric        | Improvement                    | Hardware      |
+|----------------------|---------------|--------------------------------|---------------|
+| Quantization         | TTFT          | **5.58× faster**               | CPU           |
+| Quantization         | TPS           | **7.3× faster**                | CPU           |
+| KV cache (LRU)       | TTFT          | **81% reduction**              | CPU           |
+| KV cache (Sliding)   | TTFT          | **82% reduction**              | CPU           |
+| Continuous batching  | Throughput    | algorithm demonstrated         | GPU optimal   |
+| Speculative decoding | TTFT          | algorithm demonstrated         | GPU optimal   |
 
-All improvements are experimentally measured and reproducible.
+KV cache and quantization results are experimentally measured on CPU.
+Batching and speculative decoding algorithms are correctly implemented;
+full throughput gains require GPU-based parallel verification.
 
 ---
 
@@ -94,44 +97,54 @@ Benchmarks were run on CPU only using **TinyLlama 1.1B**.
 
 | Format   | Memory   | TTFT    | TPS    | ROUGE-L |
 |----------|----------|---------|--------|---------|
-| float32  | ~4 GB    | 31.58 s | 1.83   | 1.000   |
+| F16      | ~2.2 GB  | 31.58 s | 1.83   | 1.000   |
 | Q4\_K\_M | ~0.7 GB  | 5.66 s  | 13.28  | 0.384   |
 
 Result: **5.58× TTFT speedup** with only 13.6% ROUGE-L quality drop.
 
 ---
 
-### KV Cache
+### KV Cache (measured on CPU — TinyLlama 1.1B)
 
-| Policy         | TTFT    | Reduction vs baseline |
-|----------------|---------|----------------------|
-| No cache       | 9.06 s  | —                    |
-| FIFO           | 5.03 s  | 44.5%                |
-| LRU            | 4.41 s  | 51.3%                |
-| Sliding window | 2.52 s  | **72.2%**            |
+| Policy         | TTFT reduction | Hit rate |
+|----------------|----------------|----------|
+| No cache       | — (baseline)   | 0%       |
+| FIFO           | **80.7%**      | 66.7%    |
+| LRU            | **81.2%**      | 66.7%    |
+| Sliding window | **82.1%**      | 66.7%    |
+
+Cache hits are served instantly (0 model calls). With a 66.7% hit rate on a
+realistic repeated-prompt workload, average TTFT drops by over 80%.
 
 ---
 
 ### Continuous Batching
 
-| Scheduler            | Throughput    | Mean wait | Improvement      |
-|----------------------|---------------|-----------|------------------|
-| No batching          | 0.093 req/s   | 45.5 s    | —                |
-| Static batching      | 0.120 req/s   | 50.9 s    | +29% throughput  |
-| Continuous batching  | 0.139 req/s   | 28.4 s    | **+49% throughput, -44% wait** |
+Three scheduling strategies are implemented and benchmarked.
+The algorithm correctly demonstrates slot management and head-of-line
+blocking elimination. Full throughput gains (as seen in vLLM/TGI) require
+GPU-based parallel token generation across batch slots.
 
-Continuous batching fills freed slots immediately when requests finish.
+| Scheduler            | Description                                    |
+|----------------------|------------------------------------------------|
+| No batching          | Sequential, one request at a time              |
+| Static batching      | Collect N requests, process together           |
+| Continuous batching  | Fill slots immediately as requests complete    |
 
 ---
 
 ### Speculative Decoding
 
-| Mode                 | TTFT    | Accept rate |
-|----------------------|---------|-------------|
-| Baseline             | 7.33 s  | —           |
-| Speculative (γ = 5)  | 1.26 s  | 100%        |
+Algorithm correctly implements Chen et al. (2023) with **100% acceptance rate**
+at temperature = 0. On CPU with llama-cpp, tokens are generated sequentially —
+there is no batched parallel verification, so the draft + verify overhead
+exceeds the baseline on CPU. The speedup (5–6×) is achievable on GPU where
+the target model verifies k tokens in a single forward pass.
 
-**5.81× TTFT speedup** based on Chen et al. (2023).
+| Mode                | Accept rate | Notes                        |
+|---------------------|-------------|------------------------------|
+| Baseline            | —           | 1 target call per token      |
+| Speculative (γ = 5) | **100%**    | GPU needed for full speedup  |
 
 ---
 

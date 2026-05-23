@@ -18,7 +18,8 @@ from src.benchmarks.metrics import print_table
 
 MODEL_PATH = "models/tinyllama-1.1b-Q4_K_M.gguf"
 N_THREADS = 4
-MAX_TOKENS = 64
+MAX_TOKENS = 256
+N_CTX = 2048
 CACHE_CAPACITY = 32
 
 # Workload: 6 unique prompts, repeated 3 times each (18 total requests)
@@ -84,7 +85,7 @@ def main() -> None:
     print(f"Capacity    : {CACHE_CAPACITY} entries")
     print()
 
-    engine = InferenceEngine(MODEL_PATH, n_ctx=512, n_threads=N_THREADS)
+    engine = InferenceEngine(MODEL_PATH, n_ctx=N_CTX, n_threads=N_THREADS)
 
     configs = [
         ("No cache",       None),

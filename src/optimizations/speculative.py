@@ -93,20 +93,21 @@ class SpeculativeDecoder:
             self._total_proposed += len(draft_tokens)
 
             # --- Verification phase -------------------------------------------
+            # Target verifies all k draft tokens in ONE call (not k separate calls).
+            # At temperature=0 with same model: output matches draft → 100% acceptance.
+            target_text = self.target.generate_single(
+                prompt=current_prompt, max_tokens=k, temperature=0.0
+            )
+            target_tokens = _split_tokens(target_text, k)
+
             accepted: list[str] = []
             bonus_token: str = ""
 
-            for i, dt in enumerate(draft_tokens):
-                context = current_prompt + "".join(draft_tokens[:i])
-                target_tok = self.target.generate_single(
-                    prompt=context, max_tokens=1, temperature=0.0
-                )
-                # Greedy match: accept when target agrees with draft
-                if target_tok.strip() == dt.strip() or not target_tok.strip():
+            for dt, tt in zip(draft_tokens, target_tokens):
+                if dt.strip() == tt.strip() or not tt.strip():
                     accepted.append(dt)
                 else:
-                    # Rejection — resample from target distribution
-                    bonus_token = target_tok
+                    bonus_token = tt
                     break
             else:
                 # All γ accepted → sample one bonus token from target
