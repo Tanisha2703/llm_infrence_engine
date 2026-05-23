@@ -1,0 +1,22 @@
+[project]
+name = "llm-inference-optimization"
+version = "0.1.0"
+description = "LLM serving latency optimization via quantization, KV caching, continuous batching, and speculative decoding"
+requires-python = ">=3.10"
+dependencies = [
+    "llama-cpp-python>=0.2.90",
+    "fastapi>=0.111.0",
+    "uvicorn[standard]>=0.30.0",
+    "prometheus-client>=0.20.0",
+    "rouge-score>=0.1.2",
+    "httpx>=0.27.0",
+    "pydantic>=2.7.0",
+    "numpy>=1.26.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
