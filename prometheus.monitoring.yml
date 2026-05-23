@@ -1,0 +1,10 @@
+global:
+  scrape_interval: 5s
+  evaluation_interval: 5s
+
+scrape_configs:
+  - job_name: "llm-inference"
+    static_configs:
+      # host.docker.internal reaches your local machine from inside Docker on Windows/Mac
+      - targets: ["host.docker.internal:8000"]
+    metrics_path: /metrics
