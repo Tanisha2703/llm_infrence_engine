@@ -5,8 +5,9 @@ from contextlib import asynccontextmanager
 from typing import Optional
 
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import Response
 from pydantic import BaseModel
-from prometheus_client import make_asgi_app, Counter, Histogram, Gauge
+from prometheus_client import generate_latest, CONTENT_TYPE_LATEST, Counter, Histogram, Gauge
 
 from src.server.inference import InferenceEngine
 from src.optimizations.kv_cache import LRUCache
@@ -54,9 +55,6 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="LLM Inference Optimizer", lifespan=lifespan)
 
-# Mount Prometheus /metrics endpoint
-app.mount("/metrics", make_asgi_app())
-
 
 # ---------------------------------------------------------------------------
 # Request / response schemas
@@ -83,6 +81,11 @@ class GenerateResponse(BaseModel):
 @app.get("/health")
 async def health():
     return {"status": "ok"}
+
+
+@app.get("/metrics")
+async def metrics():
+    return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
 
 
 @app.post("/generate", response_model=GenerateResponse)
