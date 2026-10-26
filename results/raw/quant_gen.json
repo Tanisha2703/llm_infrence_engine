@@ -1,0 +1,18 @@
+{
+  "RTN int8 per-channel": {
+    "identical_fraction": 0.66875,
+    "mean_first_divergence": 21.4
+  },
+  "RTN int4 g128": {
+    "identical_fraction": 0.16875,
+    "mean_first_divergence": 3.4
+  },
+  "RTN int4 g32": {
+    "identical_fraction": 0.30625,
+    "mean_first_divergence": 5.2
+  },
+  "GPTQ int4 g128": {
+    "identical_fraction": 0.225,
+    "mean_first_divergence": 3.8
+  }
+}

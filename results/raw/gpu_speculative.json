@@ -1,0 +1,266 @@
+{
+  "env": {
+    "device": "cuda",
+    "dtype": "bfloat16",
+    "threads": 4,
+    "torch": "2.14.1+cu130",
+    "target": "Qwen/Qwen2.5-1.5B-Instruct",
+    "draft": "Qwen/Qwen2.5-0.5B-Instruct",
+    "max_new": 64,
+    "target_params_M": 1543.714304,
+    "draft_params_M": 494.032768
+  },
+  "costs": {
+    "verify": {
+      "1": 0.01726392300002999,
+      "2": 0.019482983999978387,
+      "3": 0.01939146699999128,
+      "4": 0.019681040999955712,
+      "5": 0.019336946999999327,
+      "6": 0.019437554999967688,
+      "8": 0.018951325999978508,
+      "9": 0.019329626999990523
+    },
+    "draft_step": 0.014163211999971281
+  },
+  "c": 0.8203936034669916,
+  "open-ended @ T=0.0": {
+    "baseline": {
+      "tokens": 252,
+      "decode_s": 4.4438776119999375,
+      "tok_per_s": 56.707232287297195
+    },
+    "draft model k=2": {
+      "tokens": 252,
+      "decode_s": 5.239854307999963,
+      "tok_per_s": 48.092940220734434,
+      "acceptance": 0.729064039408867,
+      "alpha_hat": 0.8131868131868132,
+      "tokens_per_round": 2.423076923076923,
+      "rounds": 104,
+      "draft_ms_per_round": 30.11193356730611,
+      "verify_ms_per_round": 19.492235384614258,
+      "proposed": 203,
+      "position_acceptance": [
+        0.7941176470588235,
+        0.8375
+      ],
+      "tokens_per_round_from_positions": 2.459191176470588,
+      "speedup": 0.848091826754655,
+      "predicted_speedup": 0.8952382264837693,
+      "predicted_speedup_positions": 0.8897142397387231
+    },
+    "draft model k=4": {
+      "tokens": 252,
+      "decode_s": 6.331632151999997,
+      "tok_per_s": 39.80016430998756,
+      "acceptance": 0.5414012738853503,
+      "alpha_hat": 0.7798165137614679,
+      "tokens_per_round": 3.073170731707317,
+      "rounds": 82,
+      "draft_ms_per_round": 57.21013146341756,
+      "verify_ms_per_round": 19.591645499997135,
+      "proposed": 314,
+      "position_acceptance": [
+        0.7088607594936709,
+        0.8392857142857143,
+        0.7872340425531915,
+        0.8333333333333334
+      ],
+      "tokens_per_round_from_positions": 3.162447257383966,
+      "speedup": 0.7018534092502883,
+      "predicted_speedup": 0.7342582488425202,
+      "predicted_speedup_positions": 0.7184681304011392
+    },
+    "draft model k=6": {
+      "tokens": 252,
+      "decode_s": 7.219239820000041,
+      "tok_per_s": 34.906722353489926,
+      "acceptance": 0.4642857142857143,
+      "alpha_hat": 0.7777777777777778,
+      "tokens_per_round": 3.6,
+      "rounds": 70,
+      "draft_ms_per_round": 82.88946657142932,
+      "verify_ms_per_round": 19.80760262857026,
+      "proposed": 392,
+      "position_acceptance": [
+        0.8059701492537313,
+        0.7962962962962963,
+        0.6976744186046512,
+        0.7586206896551724,
+        0.8636363636363636,
+        0.7368421052631579
+      ],
+      "tokens_per_round_from_positions": 3.744724652599073,
+      "speedup": 0.6155603252975065,
+      "predicted_speedup": 0.6165457483616481,
+      "predicted_speedup_positions": 0.6197806580136286
+    },
+    "n-gram k=4": {
+      "tokens": 252,
+      "decode_s": 4.343270877999942,
+      "tok_per_s": 58.020788267308106,
+      "acceptance": 0.04713804713804714,
+      "alpha_hat": 0.15217391304347827,
+      "tokens_per_round": 1.0588235294117647,
+      "rounds": 238,
+      "draft_ms_per_round": 0.050624676471464326,
+      "verify_ms_per_round": 17.949784516806172,
+      "proposed": 297,
+      "position_acceptance": [
+        0.11538461538461539,
+        0.4444444444444444,
+        0.25,
+        0.0
+      ],
+      "tokens_per_round_from_positions": 1.1794871794871795,
+      "speedup": 1.023163817506663
+    },
+    "n-gram k=8": {
+      "tokens": 252,
+      "decode_s": 4.341360060000056,
+      "tok_per_s": 58.04632569453286,
+      "acceptance": 0.0325497287522604,
+      "alpha_hat": 0.1836734693877551,
+      "tokens_per_round": 1.0769230769230769,
+      "rounds": 234,
+      "draft_ms_per_round": 0.05124153418533658,
+      "verify_ms_per_round": 18.230917350426633,
+      "proposed": 553,
+      "position_acceptance": [
+        0.15,
+        0.3333333333333333,
+        0.5,
+        0.0,
+        NaN,
+        NaN,
+        NaN,
+        NaN
+      ],
+      "tokens_per_round_from_positions": 1.2249999999999999,
+      "speedup": 1.0236141556063147
+    }
+  },
+  "copy-heavy @ T=0.0": {
+    "baseline": {
+      "tokens": 252,
+      "decode_s": 4.409393373000057,
+      "tok_per_s": 57.15071863242371
+    },
+    "draft model k=2": {
+      "tokens": 252,
+      "decode_s": 5.086517245999971,
+      "tok_per_s": 49.54273972002599,
+      "acceptance": 0.8633879781420765,
+      "alpha_hat": 0.9080459770114943,
+      "tokens_per_round": 2.6808510638297873,
+      "rounds": 94,
+      "draft_ms_per_round": 32.801626351062424,
+      "verify_ms_per_round": 20.950395691493988,
+      "proposed": 183,
+      "position_acceptance": [
+        0.8924731182795699,
+        0.9259259259259259
+      ],
+      "tokens_per_round_from_positions": 2.7188371166865792,
+      "speedup": 0.8668786833402751,
+      "predicted_speedup": 0.9886288418499486,
+      "predicted_speedup_positions": 0.9836519101853377
+    },
+    "draft model k=4": {
+      "tokens": 252,
+      "decode_s": 5.263084949000017,
+      "tok_per_s": 47.88066361115449,
+      "acceptance": 0.7768595041322314,
+      "alpha_hat": 0.9038461538461539,
+      "tokens_per_round": 3.9375,
+      "rounds": 64,
+      "draft_ms_per_round": 60.98357473437055,
+      "verify_ms_per_round": 20.830564765629944,
+      "proposed": 242,
+      "position_acceptance": [
+        0.8888888888888888,
+        0.8727272727272727,
+        0.9148936170212766,
+        0.9534883720930233
+      ],
+      "tokens_per_round_from_positions": 4.05110681280894,
+      "speedup": 0.8377963524677364,
+      "predicted_speedup": 0.9375018536333879,
+      "predicted_speedup_positions": 0.9203603731440096
+    },
+    "draft model k=6": {
+      "tokens": 252,
+      "decode_s": 5.17181358199997,
+      "tok_per_s": 48.72565416453973,
+      "acceptance": 0.8015564202334631,
+      "alpha_hat": 0.9321266968325792,
+      "tokens_per_round": 5.478260869565218,
+      "rounds": 46,
+      "draft_ms_per_round": 90.57891191304674,
+      "verify_ms_per_round": 21.37003767391276,
+      "proposed": 257,
+      "position_acceptance": [
+        0.9111111111111111,
+        0.925,
+        0.918918918918919,
+        1.0,
+        1.0,
+        0.8484848484848485
+      ],
+      "tokens_per_round_from_positions": 5.7343265993266,
+      "speedup": 0.8525816530484688,
+      "predicted_speedup": 0.9475959818162607,
+      "predicted_speedup_positions": 0.9490750436160847
+    },
+    "n-gram k=4": {
+      "tokens": 252,
+      "decode_s": 3.064483242999927,
+      "tok_per_s": 82.232461402957,
+      "acceptance": 0.29394812680115273,
+      "alpha_hat": 0.5895953757225434,
+      "tokens_per_round": 1.68,
+      "rounds": 150,
+      "draft_ms_per_round": 0.0617126666634249,
+      "verify_ms_per_round": 20.06653825333501,
+      "proposed": 347,
+      "position_acceptance": [
+        0.4222222222222222,
+        0.6842105263157895,
+        0.7692307692307693,
+        0.9473684210526315
+      ],
+      "tokens_per_round_from_positions": 2.1438596491228075,
+      "speedup": 1.438870120459054
+    },
+    "n-gram k=8": {
+      "tokens": 252,
+      "decode_s": 2.8265842579999685,
+      "tok_per_s": 89.15354257944884,
+      "acceptance": 0.22332015810276679,
+      "alpha_hat": 0.6208791208791209,
+      "tokens_per_round": 1.8129496402877698,
+      "rounds": 139,
+      "draft_ms_per_round": 0.062337683455556174,
+      "verify_ms_per_round": 19.981260115109222,
+      "proposed": 506,
+      "position_acceptance": [
+        0.38461538461538464,
+        0.6551724137931034,
+        0.7368421052631579,
+        0.8571428571428571,
+        0.8333333333333334,
+        1.0,
+        1.0,
+        0.8
+      ],
+      "tokens_per_round_from_positions": 2.4854111405835546,
+      "speedup": 1.5599723802750005
+    }
+  },
+  "_run": {
+    "gpu": "NVIDIA A10",
+    "torch": "2.14.1+cu130",
+    "cuda": "13.0"
+  }
+}

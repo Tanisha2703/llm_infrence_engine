@@ -1,0 +1,81 @@
+{
+  "device": "cuda",
+  "dtype": "bfloat16",
+  "ctx": 128,
+  "weight_bytes": 988065536,
+  "read_bandwidth_gbs": 502.69565087009255,
+  "ideal_ms": 1.9655342835964529,
+  "rows": [
+    {
+      "batch": 1,
+      "total_ms": 18.49084599999884,
+      "enqueue_ms": 17.928021999999544,
+      "enqueue_over_total": 0.9695620200395736,
+      "vs_ideal": 9.40754183445992,
+      "tokens_per_s": 54.0808138253957,
+      "kernels_per_step": 1358,
+      "graph_ms": 5.6251239999980385,
+      "graph_tokens_per_s": 177.77385885188463,
+      "graph_speedup": 3.287189046855729,
+      "graph_vs_ideal": 2.8618803787565694
+    },
+    {
+      "batch": 4,
+      "total_ms": 24.307865999993794,
+      "enqueue_ms": 23.73191899999938,
+      "enqueue_over_total": 0.9763061471544001,
+      "vs_ideal": 12.367052664945774,
+      "tokens_per_s": 164.5557861805319,
+      "kernels_per_step": 1358,
+      "graph_ms": 5.761775999999941,
+      "graph_tokens_per_s": 694.2303900741787,
+      "graph_speedup": 4.218814823761639,
+      "graph_vs_ideal": 2.931404477696152
+    },
+    {
+      "batch": 8,
+      "total_ms": 24.872082999998213,
+      "enqueue_ms": 24.292584999997757,
+      "enqueue_over_total": 0.9767008657859296,
+      "vs_ideal": 12.65410794793582,
+      "tokens_per_s": 321.6457584192114,
+      "kernels_per_step": 1358,
+      "graph_ms": 5.977276000002973,
+      "graph_tokens_per_s": 1338.4023090109977,
+      "graph_speedup": 4.161106664638849,
+      "graph_vs_ideal": 3.0410438779353175
+    },
+    {
+      "batch": 16,
+      "total_ms": 24.77915899999772,
+      "enqueue_ms": 24.19378799999805,
+      "enqueue_over_total": 0.976376478313904,
+      "vs_ideal": 12.6068312350461,
+      "tokens_per_s": 645.7039159400637,
+      "kernels_per_step": 1358,
+      "graph_ms": 6.522799999999052,
+      "graph_tokens_per_s": 2452.934322683867,
+      "graph_speedup": 3.798853099895953,
+      "graph_vs_ideal": 3.3185887696977248
+    },
+    {
+      "batch": 32,
+      "total_ms": 25.20421100000192,
+      "enqueue_ms": 24.602844000000346,
+      "enqueue_over_total": 0.97614021720412,
+      "vs_ideal": 12.823083886323419,
+      "tokens_per_s": 1269.629110786192,
+      "kernels_per_step": 1406,
+      "graph_ms": 8.10802800000232,
+      "graph_tokens_per_s": 3946.705660117459,
+      "graph_speedup": 3.108550069140697,
+      "graph_vs_ideal": 4.125101285522524
+    }
+  ],
+  "gpu": "NVIDIA A10",
+  "_run": {
+    "gpu": "NVIDIA A10",
+    "torch": "2.14.1+cu130",
+    "cuda": "13.0"
+  }
+}

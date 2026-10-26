@@ -1,0 +1,73 @@
+{
+  "device": "cuda",
+  "dtype": "float32",
+  "tokens": 24,
+  "rows": [
+    {
+      "path": "continuous batching (4 slots)",
+      "identical_sequences": 4,
+      "sequences": 4,
+      "token_agreement": 1.0,
+      "first_divergence": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "path": "static batching (4 slots)",
+      "identical_sequences": 4,
+      "sequences": 4,
+      "token_agreement": 1.0,
+      "first_divergence": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "path": "paged continuous batching",
+      "identical_sequences": 4,
+      "sequences": 4,
+      "token_agreement": 1.0,
+      "first_divergence": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "path": "paged, second pass (prefix cache hits)",
+      "identical_sequences": 4,
+      "sequences": 4,
+      "token_agreement": 1.0,
+      "first_divergence": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "path": "speculative decoding (n-gram drafter, k=4)",
+      "identical_sequences": 4,
+      "sequences": 4,
+      "token_agreement": 1.0,
+      "first_divergence": [
+        null,
+        null,
+        null,
+        null
+      ]
+    }
+  ],
+  "gpu": "NVIDIA A10",
+  "_run": {
+    "gpu": "NVIDIA A10",
+    "torch": "2.14.1+cu130",
+    "cuda": "13.0"
+  }
+}

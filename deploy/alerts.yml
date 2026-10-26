@@ -1,0 +1,38 @@
+# Alert rules. The thresholds are illustrative starting points for a laptop-CPU demo, not tuned SLOs.
+groups:
+  - name: miniserve
+    rules:
+      - alert: MiniServeDown
+        expr: up{job="miniserve"} == 0
+        for: 30s
+        labels: {severity: page}
+        annotations:
+          summary: "miniserve is not answering /metrics scrapes"
+
+      - alert: EngineCrashed
+        expr: miniserve_engine_up == 0
+        for: 0s
+        labels: {severity: page}
+        annotations:
+          summary: "the engine thread crashed; /health returns 503"
+
+      - alert: HighTimeToFirstToken
+        expr: histogram_quantile(0.95, sum by (le) (rate(miniserve_time_to_first_token_seconds_bucket[1m]))) > 2
+        for: 1m
+        labels: {severity: warn}
+        annotations:
+          summary: "p95 time-to-first-token above 2s for a minute"
+
+      - alert: QueueBuilding
+        expr: miniserve_requests_waiting > 10
+        for: 1m
+        labels: {severity: warn}
+        annotations:
+          summary: "more than 10 requests have been waiting for a minute: capacity is exceeded"
+
+      - alert: RequestsFailing
+        expr: sum(rate(miniserve_requests_total{status=~"error|rejected"}[1m])) > 0
+        for: 1m
+        labels: {severity: warn}
+        annotations:
+          summary: "requests are being rejected (429) or failing (5xx)"

@@ -1,0 +1,13 @@
+# Prometheus configuration (used by docker-compose.yml). Prometheus PULLS: every scrape_interval it does GET /metrics on each target.
+global:
+  scrape_interval: 5s       # short because our experiments last minutes; production usually uses 15-30s
+  evaluation_interval: 5s   # how often alert rules are evaluated
+
+rule_files:
+  - alerts.yml
+
+scrape_configs:
+  - job_name: miniserve
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["miniserve:8000"]   # the server container, reachable by its compose service name
