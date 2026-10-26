@@ -1,0 +1,198 @@
+{
+  "env": {
+    "device": "cuda",
+    "dtype": "bfloat16",
+    "threads": 4,
+    "torch": "2.14.1+cu130",
+    "slots": 16,
+    "requests": 32,
+    "seed": 0
+  },
+  "scaling": [
+    {
+      "batch": 1,
+      "step_ms": 19.29281900000035,
+      "tokens_per_s": 51.83275704810074,
+      "speedup_vs_b1": 1.0,
+      "ms_per_token_per_row": 19.29281900000035,
+      "weight_gbs": 51.21416087508944
+    },
+    {
+      "batch": 2,
+      "step_ms": 19.22267700000191,
+      "tokens_per_s": 104.04378120694643,
+      "speedup_vs_b1": 2.0072978389012555,
+      "ms_per_token_per_row": 9.611338500000954,
+      "weight_gbs": 51.40103722285413
+    },
+    {
+      "batch": 4,
+      "step_ms": 19.50431599999547,
+      "tokens_per_s": 205.08281346553906,
+      "speedup_vs_b1": 3.95662560020148,
+      "ms_per_token_per_row": 4.876078999998867,
+      "weight_gbs": 50.65881500280397
+    },
+    {
+      "batch": 8,
+      "step_ms": 19.523422999995432,
+      "tokens_per_s": 409.76420989300243,
+      "speedup_vs_b1": 7.905506734143849,
+      "ms_per_token_per_row": 2.440427874999429,
+      "weight_gbs": 50.609236710193244
+    },
+    {
+      "batch": 16,
+      "step_ms": 19.54384100000084,
+      "tokens_per_s": 818.6722354116222,
+      "speedup_vs_b1": 15.794495258122105,
+      "ms_per_token_per_row": 1.2214900625000524,
+      "weight_gbs": 50.556363818143915
+    }
+  ],
+  "burst": {
+    "sequential": {
+      "requests": 32,
+      "output_tokens": 904,
+      "wall_time_s": 17.262921669999997,
+      "throughput_tok_s": 52.36657022959197,
+      "ttft_mean_s": 8.391593960781247,
+      "ttft_p50_s": 8.454322185499997,
+      "ttft_p95_s": 15.86312913359999,
+      "queue_wait_mean_s": 8.371337730718746,
+      "e2e_mean_s": 8.910737631031248,
+      "e2e_p95_s": 16.611398458749996,
+      "tpot_mean_ms": 19.075430375592234,
+      "steps": 904,
+      "mean_decode_batch": 1.0,
+      "wasted_row_fraction": 0.0,
+      "cache_reserved_mb": 1.78125
+    },
+    "static batch=16": {
+      "requests": 32,
+      "output_tokens": 904,
+      "wall_time_s": 2.4148079409999923,
+      "throughput_tok_s": 374.3568938346484,
+      "ttft_mean_s": 0.7815417666562463,
+      "ttft_p50_s": 0.786136518499994,
+      "ttft_p95_s": 1.5033456766499989,
+      "queue_wait_mean_s": 0.7619444310312451,
+      "e2e_mean_s": 1.450392923093745,
+      "e2e_p95_s": 2.332766378449996,
+      "tpot_mean_ms": 28.03077732818935,
+      "steps": 96,
+      "mean_decode_batch": 16.0,
+      "wasted_row_fraction": 0.42021276595744683,
+      "cache_reserved_mb": 28.5
+    },
+    "continuous slots=16": {
+      "requests": 32,
+      "output_tokens": 904,
+      "wall_time_s": 2.1750971609999965,
+      "throughput_tok_s": 415.6136177311674,
+      "ttft_mean_s": 0.6597637741874975,
+      "ttft_p50_s": 0.583668338999999,
+      "ttft_p95_s": 1.3758520138499988,
+      "queue_wait_mean_s": 0.6407607733124974,
+      "e2e_mean_s": 1.3986662563749963,
+      "e2e_p95_s": 2.1471134811499972,
+      "tpot_mean_ms": 28.394640228101306,
+      "steps": 85,
+      "mean_decode_batch": 10.380952380952381,
+      "wasted_row_fraction": 0.0,
+      "cache_reserved_mb": 28.5
+    },
+    "continuous slots=16 + CUDA graphs": {
+      "requests": 32,
+      "output_tokens": 904,
+      "wall_time_s": 1.1685368189999963,
+      "throughput_tok_s": 773.617044239667,
+      "ttft_mean_s": 0.441238349999999,
+      "ttft_p50_s": 0.41132117200000096,
+      "ttft_p95_s": 0.8758001750999994,
+      "queue_wait_mean_s": 0.42211466437500045,
+      "e2e_mean_s": 0.8455988991562493,
+      "e2e_p95_s": 1.160357794599998,
+      "tpot_mean_ms": 15.895208319873316,
+      "steps": 85,
+      "mean_decode_batch": 10.380952380952381,
+      "wasted_row_fraction": 0.0,
+      "cache_reserved_mb": 30.28125
+    }
+  },
+  "staggered": {
+    "sequential": {
+      "requests": 32,
+      "output_tokens": 840,
+      "wall_time_s": 59.88995464300001,
+      "throughput_tok_s": 14.025724430869642,
+      "ttft_mean_s": 0.1761658537136559,
+      "ttft_p50_s": 0.020744058198488347,
+      "ttft_p95_s": 0.735856028928748,
+      "queue_wait_mean_s": 0.15628819880740696,
+      "e2e_mean_s": 0.6370687292761579,
+      "e2e_p95_s": 1.3962642433787478,
+      "tpot_mean_ms": 18.14702167065548,
+      "steps": 840,
+      "mean_decode_batch": 1.0,
+      "wasted_row_fraction": 0.0,
+      "cache_reserved_mb": 1.78125
+    },
+    "static batch=16": {
+      "requests": 32,
+      "output_tokens": 840,
+      "wall_time_s": 59.88766002900002,
+      "throughput_tok_s": 14.026261830788483,
+      "ttft_mean_s": 0.1055952035261658,
+      "ttft_p50_s": 0.021476897011183382,
+      "ttft_p95_s": 0.6089032483733503,
+      "queue_wait_mean_s": 0.08498437486991417,
+      "e2e_mean_s": 0.5791621084636649,
+      "e2e_p95_s": 1.2513623472733526,
+      "tpot_mean_ms": 18.89668130477774,
+      "steps": 780,
+      "mean_decode_batch": 1.0812250332889481,
+      "wasted_row_fraction": 0.0049261083743842304,
+      "cache_reserved_mb": 28.5
+    },
+    "continuous slots=16": {
+      "requests": 32,
+      "output_tokens": 840,
+      "wall_time_s": 59.911606248,
+      "throughput_tok_s": 14.020655639290949,
+      "ttft_mean_s": 0.023136525869904112,
+      "ttft_p50_s": 0.022499770352055748,
+      "ttft_p95_s": 0.03108820891424102,
+      "queue_wait_mean_s": 0.0021674126199062727,
+      "e2e_mean_s": 0.5137498057449053,
+      "e2e_p95_s": 0.9179367634997149,
+      "tpot_mean_ms": 19.675218213034846,
+      "steps": 706,
+      "mean_decode_batch": 1.188235294117647,
+      "wasted_row_fraction": 0.0,
+      "cache_reserved_mb": 28.5
+    },
+    "continuous slots=16 + CUDA graphs": {
+      "requests": 32,
+      "output_tokens": 840,
+      "wall_time_s": 59.70017623299998,
+      "throughput_tok_s": 14.070310223568152,
+      "ttft_mean_s": 0.02299014405738653,
+      "ttft_p50_s": 0.022876102280861232,
+      "ttft_p95_s": 0.02487460009732274,
+      "queue_wait_mean_s": 0.0009391821823800939,
+      "e2e_mean_s": 0.15716093077613458,
+      "e2e_p95_s": 0.26848767775992144,
+      "tpot_mean_ms": 5.304122482621305,
+      "steps": 768,
+      "mean_decode_batch": 1.0918918918918918,
+      "wasted_row_fraction": 0.0,
+      "cache_reserved_mb": 30.28125
+    }
+  },
+  "_run": {
+    "gpu": "NVIDIA A10",
+    "torch": "2.14.1+cu130",
+    "cuda": "13.0"
+  }
+}

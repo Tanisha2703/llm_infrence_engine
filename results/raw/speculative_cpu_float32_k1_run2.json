@@ -1,0 +1,79 @@
+{
+  "env": {
+    "device": "cpu",
+    "dtype": "float32",
+    "threads": 6,
+    "torch": "2.14.1+cpu",
+    "target": "Qwen/Qwen2.5-1.5B-Instruct",
+    "draft": "Qwen/Qwen2.5-0.5B-Instruct",
+    "max_new": 32,
+    "target_params_M": 1543.714304,
+    "draft_params_M": 494.032768
+  },
+  "costs": {
+    "verify": {
+      "1": 0.2779168999986723,
+      "2": 0.24818080000113696,
+      "3": 0.4467086000367999,
+      "4": 0.5898596000042744,
+      "5": 0.7945070000132546,
+      "6": 0.7540083000203595,
+      "8": 1.1898324000067078,
+      "9": 0.9265083000063896
+    },
+    "draft_step": 0.12997380003798753
+  },
+  "c": 0.46767145156918655,
+  "open-ended @ T=0.0": {
+    "baseline": {
+      "tokens": 124,
+      "decode_s": 36.444604099961,
+      "tok_per_s": 3.4024241190792
+    },
+    "draft model k=1": {
+      "tokens": 124,
+      "decode_s": 27.553042100043967,
+      "tok_per_s": 4.500410500944363,
+      "acceptance": 0.7794117647058824,
+      "alpha_hat": 0.7794117647058824,
+      "tokens_per_round": 1.7464788732394365,
+      "rounds": 71,
+      "draft_ms_per_round": 123.88199154930321,
+      "verify_ms_per_round": 258.3370295772985,
+      "proposed": 68,
+      "position_acceptance": [
+        0.7794117647058824
+      ],
+      "tokens_per_round_from_positions": 1.7794117647058822,
+      "speedup": 1.3227070886631005,
+      "predicted_speedup": 1.307741863822524,
+      "predicted_speedup_positions": 1.307741863822524
+    }
+  },
+  "copy-heavy @ T=0.0": {
+    "baseline": {
+      "tokens": 124,
+      "decode_s": 35.87798010004917,
+      "tok_per_s": 3.4561588933996332
+    },
+    "draft model k=1": {
+      "tokens": 124,
+      "decode_s": 26.014696699974593,
+      "tok_per_s": 4.766536447842619,
+      "acceptance": 0.9354838709677419,
+      "alpha_hat": 0.9354838709677419,
+      "tokens_per_round": 1.878787878787879,
+      "rounds": 66,
+      "draft_ms_per_round": 129.13419242602575,
+      "verify_ms_per_round": 259.5087575724447,
+      "proposed": 62,
+      "position_acceptance": [
+        0.9354838709677419
+      ],
+      "tokens_per_round_from_positions": 1.935483870967742,
+      "speedup": 1.3791427404988432,
+      "predicted_speedup": 1.4224438294843775,
+      "predicted_speedup_positions": 1.422443829484377
+    }
+  }
+}

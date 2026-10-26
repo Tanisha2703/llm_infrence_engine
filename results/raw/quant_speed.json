@@ -1,0 +1,43 @@
+{
+  "fp32 baseline": {
+    "decode_ms": 104.41094347903424,
+    "decode_tok_s": 9.57754011868306,
+    "prefill_ms": 947.4819000461139,
+    "weights_mib": 1884.58544921875
+  },
+  "int8 per-channel: dequantize on every call (ours)": {
+    "decode_ms": 414.48163478280946,
+    "decode_tok_s": 2.412652132401488,
+    "prefill_ms": 1509.8798999679275,
+    "weights_mib": 861.41552734375
+  },
+  "int8 per-channel: dequantize once, cache fp32 (ours)": {
+    "decode_ms": 110.73978695481935,
+    "decode_tok_s": 9.030178109408764,
+    "prefill_ms": 1043.158900050912,
+    "weights_mib": 861.41552734375
+  },
+  "int4 g128: dequantize on every call (ours)": {
+    "decode_ms": 869.5932695637052,
+    "decode_tok_s": 1.1499629021987747,
+    "prefill_ms": 1849.2978000431322,
+    "weights_mib": 695.54248046875
+  },
+  "int4 g128: dequantize once, cache fp32 (ours)": {
+    "decode_ms": 109.06562608737579,
+    "decode_tok_s": 9.16879163375333,
+    "prefill_ms": 1015.8670999808237,
+    "weights_mib": 695.54248046875
+  },
+  "int8 W+A dynamic, PyTorch oneDNN kernel": {
+    "decode_ms": 101.91279565206851,
+    "decode_tok_s": 9.81231055042403,
+    "prefill_ms": 745.5923000234179,
+    "weights_mib": 997.9316263198853,
+    "ppl": 177.19203743897472
+  },
+  "kv": {
+    "fp32_cache_ms": 112.4162434792632,
+    "int8_cache_ms": 114.80432608843093
+  }
+}

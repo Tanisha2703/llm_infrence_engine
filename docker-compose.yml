@@ -1,0 +1,39 @@
+# The whole stack with one command:
+#
+#   docker compose up --build        (or: podman compose up --build)
+#
+#   API         http://localhost:8000      (POST /v1/completions, /v1/chat/completions, GET /health, /metrics)
+#   Grafana     http://localhost:3000      dashboard "miniserve" (login admin / admin)
+#   Prometheus  http://localhost:9090
+#
+# The first start downloads the model (~1 GB) into the "models" volume; the API answers /health once it is loaded.
+# Memory: the fp32 CPU model needs ~4 GB free for the container. For less, use bf16:  MINISERVE_DTYPE=bfloat16 docker compose up
+services:
+  miniserve:
+    build: .
+    command: ["--engine", "paged", "--max-len", "1024", "--dtype", "${MINISERVE_DTYPE:-float32}"]
+    ports: ["8000:8000"]
+    volumes:
+      - models:/models
+
+  prometheus:
+    image: docker.io/prom/prometheus:v2.53.0
+    volumes:
+      - ./deploy/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./deploy/alerts.yml:/etc/prometheus/alerts.yml:ro
+    ports: ["9090:9090"]
+    depends_on: [miniserve]
+
+  grafana:
+    image: docker.io/grafana/grafana:11.1.0
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    volumes:
+      - ./deploy/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./deploy/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    ports: ["3000:3000"]
+    depends_on: [prometheus]
+
+volumes:
+  models:

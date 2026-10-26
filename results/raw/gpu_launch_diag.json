@@ -1,0 +1,61 @@
+{
+  "device": "cuda",
+  "dtype": "bfloat16",
+  "ctx": 128,
+  "weight_bytes": 988065536,
+  "read_bandwidth_gbs": 503.07626108561817,
+  "ideal_ms": 1.964047227885082,
+  "rows": [
+    {
+      "batch": 1,
+      "total_ms": 18.06441800000158,
+      "enqueue_ms": 17.502737000000934,
+      "enqueue_over_total": 0.968906775739988,
+      "vs_ideal": 9.197547667656465,
+      "tokens_per_s": 55.35744356667967,
+      "kernels_per_step": 1358
+    },
+    {
+      "batch": 4,
+      "total_ms": 23.72850699999951,
+      "enqueue_ms": 23.153299999998822,
+      "enqueue_over_total": 0.9757588203926737,
+      "vs_ideal": 12.081434022108905,
+      "tokens_per_s": 168.5736064220173,
+      "kernels_per_step": 1358
+    },
+    {
+      "batch": 8,
+      "total_ms": 23.82042600000034,
+      "enqueue_ms": 23.242095999998824,
+      "enqueue_over_total": 0.9757212570421072,
+      "vs_ideal": 12.128234831527223,
+      "tokens_per_s": 335.84621870322076,
+      "kernels_per_step": 1358
+    },
+    {
+      "batch": 16,
+      "total_ms": 23.464144000000076,
+      "enqueue_ms": 22.87825900000051,
+      "enqueue_over_total": 0.9750306254513456,
+      "vs_ideal": 11.946832880015135,
+      "tokens_per_s": 681.8914851528335,
+      "kernels_per_step": 1358
+    },
+    {
+      "batch": 32,
+      "total_ms": 23.675980000000152,
+      "enqueue_ms": 23.073532999999813,
+      "enqueue_over_total": 0.9745545062970853,
+      "vs_ideal": 12.054689756872513,
+      "tokens_per_s": 1351.5808004568257,
+      "kernels_per_step": 1406
+    }
+  ],
+  "gpu": "NVIDIA A10",
+  "_run": {
+    "gpu": "NVIDIA A10",
+    "torch": "2.14.1+cu130",
+    "cuda": "13.0"
+  }
+}

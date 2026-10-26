@@ -1,0 +1,98 @@
+{
+  "args": {
+    "only": "sweep",
+    "device": "cpu",
+    "dtype": "float32",
+    "slots": 8,
+    "concurrency": 8,
+    "requests": 24,
+    "repeats": 2,
+    "rates": [
+      0.4,
+      0.8,
+      1.6
+    ],
+    "sweep_requests": 24,
+    "out_tokens": [
+      16,
+      32,
+      48
+    ],
+    "shared_prefix_words": 40,
+    "max_queue": 6,
+    "tag": "cpu_float32_sweep"
+  },
+  "policies": {},
+  "sweep": {
+    "0.4": {
+      "requests_sent": 24,
+      "requests_ok": 24,
+      "failures": {},
+      "output_tokens": 784,
+      "wall_time_s": 61.84085859998595,
+      "throughput_tok_s": 12.67770237588807,
+      "request_rate_s": 0.3880929298741246,
+      "ttft_p50_s": 0.5720260000089183,
+      "ttft_p95_s": 1.6204672199615748,
+      "ttft_p99_s": 1.838003007993102,
+      "tpot_p50_ms": 313.6815585101895,
+      "tpot_p95_ms": 413.90929166499217,
+      "tpot_p99_ms": 435.46818273421377,
+      "e2e_p50_s": 9.17200820002472,
+      "e2e_p95_s": 17.171782210003588,
+      "e2e_p99_s": 18.303124446916627,
+      "inter_chunk_p99_ms": 902.6915110275145,
+      "mean_decode_batch": 2.8897338403041823,
+      "prefix_hit_rate": 0.0,
+      "preemptions": 0.0
+    },
+    "0.8": {
+      "requests_sent": 24,
+      "requests_ok": 22,
+      "failures": {
+        "429": 2
+      },
+      "output_tokens": 704,
+      "wall_time_s": 50.54731409996748,
+      "throughput_tok_s": 13.927545163086181,
+      "request_rate_s": 0.43523578634644317,
+      "ttft_p50_s": 3.979896550066769,
+      "ttft_p95_s": 14.422439619986108,
+      "ttft_p99_s": 15.362761660976101,
+      "tpot_p50_ms": 521.3901600551166,
+      "tpot_p95_ms": 595.7537689350385,
+      "tpot_p99_ms": 619.2775828007918,
+      "e2e_p50_s": 24.139181850012392,
+      "e2e_p95_s": 28.65312703505042,
+      "e2e_p99_s": 30.664667204055,
+      "inter_chunk_p99_ms": 1134.1483819833957,
+      "mean_decode_batch": 5.08955223880597,
+      "prefix_hit_rate": 0.0,
+      "preemptions": 0.0
+    },
+    "1.6": {
+      "requests_sent": 24,
+      "requests_ok": 16,
+      "failures": {
+        "429": 8
+      },
+      "output_tokens": 512,
+      "wall_time_s": 38.90929199999664,
+      "throughput_tok_s": 13.158810496989876,
+      "request_rate_s": 0.4112128280309336,
+      "ttft_p50_s": 2.6538327500456944,
+      "ttft_p95_s": 14.102407025056891,
+      "ttft_p99_s": 15.431551565020344,
+      "tpot_p50_ms": 505.8823444085666,
+      "tpot_p95_ms": 533.6336928364863,
+      "tpot_p99_ms": 543.7201198986616,
+      "e2e_p50_s": 20.351762350008357,
+      "e2e_p95_s": 30.310543575062184,
+      "e2e_p99_s": 30.92001751497737,
+      "inter_chunk_p99_ms": 1004.017034964636,
+      "mean_decode_batch": 5.01010101010101,
+      "prefix_hit_rate": 0.0,
+      "preemptions": 0.0
+    }
+  }
+}

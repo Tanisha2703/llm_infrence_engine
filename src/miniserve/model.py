@@ -4,18 +4,23 @@ Module and parameter names deliberately mirror the Hugging Face checkpoint
 (``model.layers.0.self_attn.q_proj.weight`` ...) so the released weights load
 with a plain ``load_state_dict`` and no key remapping.
 
-Stage 1: forward pass without any cache. Every call recomputes attention over
-the full sequence. Stage 2 adds the KV cache on top of this.
+The forward pass works with or without a ``KVCache`` (see cache.py). Without one,
+every call recomputes attention over the full sequence (the Stage 1 behaviour, kept as
+the correctness reference and benchmark baseline).
 """
 from __future__ import annotations
 
 import json
 from dataclasses import dataclass
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 import torch
 import torch.nn.functional as F
 from torch import nn
+
+if TYPE_CHECKING:  # cache.py imports ModelConfig from here, so avoid a runtime cycle
+    from miniserve.cache import KVCache
 
 
 @dataclass
@@ -105,7 +110,14 @@ class Attention(nn.Module):
         self.v_proj = nn.Linear(cfg.hidden_size, cfg.num_kv_heads * d, bias=True)
         self.o_proj = nn.Linear(cfg.num_heads * d, cfg.hidden_size, bias=False)
 
-    def forward(self, x: torch.Tensor, cos: torch.Tensor, sin: torch.Tensor) -> torch.Tensor:
+    def forward(
+        self,
+        x: torch.Tensor,
+        cos: torch.Tensor,
+        sin: torch.Tensor,
+        cache: "KVCache | None" = None,
+        layer_idx: int = 0,
+    ) -> torch.Tensor:
         B, T, _ = x.shape
         c = self.cfg
         q = self.q_proj(x).view(B, T, c.num_heads, c.head_dim).transpose(1, 2)
@@ -115,12 +127,27 @@ class Attention(nn.Module):
         q = apply_rope(q, cos, sin)
         k = apply_rope(k, cos, sin)
 
+        # The cache stores only the 2 KV heads (GQA), already rotated by RoPE.
+        mask = "causal"  # no cache: plain causal triangle over the whole input
+        if cache is not None:
+            k, v = cache.update(layer_idx, k, v)  # k, v now cover all past + new tokens
+            mask = cache.mask  # chosen once per forward by cache.prepare(T)
+
         # GQA: each KV head serves num_heads/num_kv_heads query heads.
         rep = c.num_heads // c.num_kv_heads
         k = k.repeat_interleave(rep, dim=1)
         v = v.repeat_interleave(rep, dim=1)
 
-        out = F.scaled_dot_product_attention(q, k, v, is_causal=True)
+        if isinstance(mask, str):
+            # Fresh prompt: query and key lengths match, plain causal triangle.
+            out = F.scaled_dot_product_attention(q, k, v, is_causal=True)
+        elif mask is None:
+            # One new token may look at everything cached: no mask needed.
+            out = F.scaled_dot_product_attention(q, k, v)
+        else:
+            # Explicit boolean mask (True = may attend): several new tokens after cached ones, or a batch
+            # of sequences with different lengths.
+            out = F.scaled_dot_product_attention(q, k, v, attn_mask=mask)
         out = out.transpose(1, 2).reshape(B, T, c.num_heads * c.head_dim)
         return self.o_proj(out)
 
@@ -146,8 +173,15 @@ class DecoderLayer(nn.Module):
         self.input_layernorm = RMSNorm(cfg.hidden_size, cfg.rms_norm_eps)
         self.post_attention_layernorm = RMSNorm(cfg.hidden_size, cfg.rms_norm_eps)
 
-    def forward(self, x: torch.Tensor, cos: torch.Tensor, sin: torch.Tensor) -> torch.Tensor:
-        x = x + self.self_attn(self.input_layernorm(x), cos, sin)  # pre-norm residual
+    def forward(
+        self,
+        x: torch.Tensor,
+        cos: torch.Tensor,
+        sin: torch.Tensor,
+        cache: "KVCache | None" = None,
+        layer_idx: int = 0,
+    ) -> torch.Tensor:
+        x = x + self.self_attn(self.input_layernorm(x), cos, sin, cache, layer_idx)  # pre-norm residual
         x = x + self.mlp(self.post_attention_layernorm(x))
         return x
 
@@ -171,15 +205,35 @@ class Qwen2(nn.Module):
         if cfg.tie_word_embeddings:
             self.lm_head.weight = self.model.embed_tokens.weight  # share one matrix
 
-    def forward(self, input_ids: torch.Tensor, positions: torch.Tensor | None = None) -> torch.Tensor:
-        """input_ids: [B, T] -> logits [B, T, vocab]."""
+    def forward(
+        self,
+        input_ids: torch.Tensor,
+        positions: torch.Tensor | None = None,
+        cache: "KVCache | None" = None,
+        last_only: bool = False,
+    ) -> torch.Tensor:
+        """input_ids: [B, T] -> logits [B, T, vocab] (or [B, 1, vocab] if ``last_only``).
+
+        With a ``cache`` (KVCache or SlotBatch), ``input_ids`` holds only the NEW tokens; their positions
+        continue from what the cache already holds (per sequence) and the cache grows by T.
+        ``last_only`` skips computing logits for every prompt position: only the last one
+        predicts the next token.
+        """
         B, T = input_ids.shape
-        if positions is None:
+        if cache is not None:
+            cache.prepare(T)  # the cache decides the mask for this forward pass
+            if positions is None:
+                positions = cache.positions(B, T)
+        elif positions is None:
             positions = torch.arange(T, device=input_ids.device).expand(B, T)
         x = self.model.embed_tokens(input_ids)
         cos, sin = rope_cos_sin(positions, self.cfg.head_dim, self.cfg.rope_theta, x.dtype)
-        for layer in self.model.layers:
-            x = layer(x, cos, sin)
+        for i, layer in enumerate(self.model.layers):
+            x = layer(x, cos, sin, cache, i)
+        if cache is not None:
+            cache.advance(T)  # all layers wrote at the same offset; advance once, after the loop
+        if last_only:
+            x = x[:, -1:]
         return self.lm_head(self.model.norm(x))
 
     def num_params(self) -> int:

@@ -1,0 +1,27 @@
+# Transcribed from the console output of the FIRST 'core' Modal run (GPU: NVIDIA A10G). The JSON files of that run were overwritten by a later run, so this text is the only record of it.
+# Settings: --device cuda --dtype bfloat16 --max-len 1024, 64 requests, 16 clients, outputs 32/64/128 tokens (see benchmarks/modal_run.py).
+
+=== ok  serve_continuous_c16  (30s) ===
+
+64/64 ok  failures=none  wall=12.4s  380.6 tok/s  5.18 req/s
+TTFT  p50 0.058s  p95 0.668s  p99 0.796s
+TPOT  p50 34.4ms  p95 36.4ms  p99 36.8ms
+E2E   p50 2.27s  p95 4.89s  p99 5.05s
+server-side: mean decode batch 12.11, preemptions 0, prefix hit rate 0.0%
+
+=== ok  serve_paged_c16  (31s) ===
+
+64/64 ok  failures=none  wall=13.1s  359.8 tok/s  4.90 req/s
+TTFT  p50 0.072s  p95 0.699s  p99 0.835s
+TPOT  p50 36.6ms  p95 38.4ms  p99 38.4ms
+E2E   p50 2.39s  p95 5.12s  p99 5.28s
+server-side: mean decode batch 12.02, preemptions 0, prefix hit rate 56.1%
+
+=== ok  serve_static_c16  (33s) ===
+
+64/64 ok  failures=none  wall=15.5s  304.4 tok/s  4.14 req/s
+TTFT  p50 0.438s  p95 2.693s  p99 2.771s
+TPOT  p50 30.5ms  p95 38.4ms  p99 40.7ms
+E2E   p50 3.77s  p95 6.24s  p99 6.38s
+server-side: mean decode batch 16.00, preemptions 0, prefix hit rate 0.0%
+

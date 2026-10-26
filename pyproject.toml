@@ -12,7 +12,15 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8"]
+dev = ["pytest>=8", "pyyaml>=6"]
+eval = ["pyarrow>=15"]  # WikiText-2 parquet files for the perplexity evaluation
+serve = [
+    "fastapi>=0.110",
+    "uvicorn>=0.29",
+    "prometheus-client>=0.20",
+    "httpx>=0.27",  # load tester and the server tests
+]
+modal = ["modal>=0.64"]  # run the benchmarks on a rented GPU (Stage 7)
 
 [build-system]
 requires = ["hatchling"]
@@ -23,3 +31,4 @@ packages = ["src/miniserve"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = ["heavy: needs several GB of extra RAM (loads a second, larger model); deselect with -m \"not heavy\""]

@@ -1,0 +1,88 @@
+{
+  "env": {
+    "device": "cpu",
+    "dtype": "float32",
+    "cpu": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+    "torch": "2.14.1+cpu",
+    "threads": 6,
+    "gpu": null,
+    "weight_bytes": 1976131072
+  },
+  "rows": [
+    {
+      "prompt_len": 16,
+      "new_tokens": 32,
+      "uncached": {
+        "ttft_s": 0.29246049997163936,
+        "ms_per_token": 374.66054516206043,
+        "decode_tps": 2.6690827548106175,
+        "total_s": 11.906996799982153
+      },
+      "cached": {
+        "ttft_s": 0.29707610001787543,
+        "ms_per_token": 140.5057354845227,
+        "decode_tps": 7.117147186565593,
+        "total_s": 4.652855699998327,
+        "cache_mb": 1.125,
+        "effective_weight_bandwidth_gbs": 14.064415699369649
+      },
+      "speedup_total": 2.5590728721688993,
+      "speedup_decode": 2.6665142449172894,
+      "total_s_spread_cached": [
+        4.652855699998327,
+        4.67198000002342,
+        4.697632600029465
+      ]
+    },
+    {
+      "prompt_len": 128,
+      "new_tokens": 32,
+      "uncached": {
+        "ttft_s": 0.8926686000195332,
+        "ms_per_token": 941.7923645157697,
+        "decode_tps": 1.0618051681849834,
+        "total_s": 30.08831530000316
+      },
+      "cached": {
+        "ttft_s": 0.839047199988272,
+        "ms_per_token": 144.07034838692314,
+        "decode_tps": 6.941053528338432,
+        "total_s": 5.305472899985034,
+        "cache_mb": 3.75,
+        "effective_weight_bandwidth_gbs": 13.716431549764806
+      },
+      "speedup_total": 5.67118442921234,
+      "speedup_decode": 6.537031214684378,
+      "total_s_spread_cached": [
+        5.305472899985034,
+        5.321204633316181,
+        5.34189179999521
+      ]
+    },
+    {
+      "prompt_len": 256,
+      "new_tokens": 32,
+      "uncached": {
+        "ttft_s": 1.1584801999852061,
+        "ms_per_token": 1110.3206806451894,
+        "decode_tps": 0.9006407044664936,
+        "total_s": 35.578459099982865
+      },
+      "cached": {
+        "ttft_s": 1.5870300999959,
+        "ms_per_token": 145.43935806573097,
+        "decode_tps": 6.875717916384452,
+        "total_s": 6.095964299980551,
+        "cache_mb": 6.75,
+        "effective_weight_bandwidth_gbs": 13.587319816874414
+      },
+      "speedup_total": 5.836395580613289,
+      "speedup_decode": 7.634251796844309,
+      "total_s_spread_cached": [
+        6.095964299980551,
+        6.173848099987178,
+        6.241788299987093
+      ]
+    }
+  ]
+}

@@ -1,0 +1,164 @@
+{
+  "fp32 (baseline)": {
+    "ppl": 18.100603277191578,
+    "nll": 2.895945267947919,
+    "tokens": 20440,
+    "layer_linear_bytes": 1431416832,
+    "model_bytes": 1976131072,
+    "ideal_layer_linear_bytes": 0.0,
+    "quantize_seconds": 9.00006853044033e-07
+  },
+  "RTN int8 per-tensor": {
+    "ppl": 18.862606731665657,
+    "nll": 2.93718148248303,
+    "tokens": 20440,
+    "layer_linear_bytes": 357937488,
+    "model_bytes": 902651728,
+    "ideal_layer_linear_bytes": 357937488.0,
+    "quantize_seconds": 1.2706484000082128
+  },
+  "RTN int8 per-channel": {
+    "ppl": 18.02610870410468,
+    "nll": 2.891821190522375,
+    "tokens": 20440,
+    "layer_linear_bytes": 358545408,
+    "model_bytes": 903259648,
+    "ideal_layer_linear_bytes": 358545408.0,
+    "quantize_seconds": 1.4873817000188865
+  },
+  "RTN int4 per-channel": {
+    "ppl": 42.54442587214121,
+    "nll": 3.7505488446080752,
+    "tokens": 20440,
+    "layer_linear_bytes": 179632128,
+    "model_bytes": 724346368,
+    "ideal_layer_linear_bytes": 179632128.0,
+    "quantize_seconds": 2.116639700019732
+  },
+  "RTN int4 g128": {
+    "ppl": 25.370622965195718,
+    "nll": 3.2335919285007186,
+    "tokens": 20440,
+    "layer_linear_bytes": 184614912,
+    "model_bytes": 729329152,
+    "ideal_layer_linear_bytes": 184614912.0,
+    "quantize_seconds": 1.9378630999708548
+  },
+  "RTN int4 g64": {
+    "ppl": 22.79079998956701,
+    "nll": 3.1263569452991224,
+    "tokens": 20440,
+    "layer_linear_bytes": 190205952,
+    "model_bytes": 734920192,
+    "ideal_layer_linear_bytes": 190205952.0,
+    "quantize_seconds": 1.8635386999812908
+  },
+  "RTN int4 g32": {
+    "ppl": 21.59736804971044,
+    "nll": 3.072571457715417,
+    "tokens": 20440,
+    "layer_linear_bytes": 201388032,
+    "model_bytes": 746102272,
+    "ideal_layer_linear_bytes": 201388032.0,
+    "quantize_seconds": 1.9341424999875017
+  },
+  "RTN int4 g128 asymmetric": {
+    "ppl": 22.191922065767713,
+    "nll": 3.099728351749786,
+    "tokens": 20440,
+    "layer_linear_bytes": 187410432,
+    "model_bytes": 732124672,
+    "ideal_layer_linear_bytes": 186012672.0,
+    "quantize_seconds": 1.7757871999638155
+  },
+  "RTN int3 g32": {
+    "ppl": 91.51002095282078,
+    "nll": 4.516448484894814,
+    "tokens": 20440,
+    "layer_linear_bytes": 380301312,
+    "model_bytes": 925015552,
+    "ideal_layer_linear_bytes": 156659712.0,
+    "quantize_seconds": 1.5783427999704145
+  },
+  "GPTQ int4 per-channel": {
+    "ppl": 25.7765785337406,
+    "nll": 3.2494662708498963,
+    "tokens": 20440,
+    "layer_linear_bytes": 179632128,
+    "model_bytes": 724346368,
+    "ideal_layer_linear_bytes": 179632128.0,
+    "quantize_seconds": 189.8538574000122
+  },
+  "GPTQ int4 g128": {
+    "ppl": 20.805030699315406,
+    "nll": 3.035194818007736,
+    "tokens": 20440,
+    "layer_linear_bytes": 184614912,
+    "model_bytes": 729329152,
+    "ideal_layer_linear_bytes": 184614912.0,
+    "quantize_seconds": 173.2552832000074
+  },
+  "GPTQ int4 g32": {
+    "ppl": 19.598612793540298,
+    "nll": 2.975458787891963,
+    "tokens": 20440,
+    "layer_linear_bytes": 201388032,
+    "model_bytes": 746102272,
+    "ideal_layer_linear_bytes": 201388032.0,
+    "quantize_seconds": 194.27437739999732
+  },
+  "GPTQ int3 g32": {
+    "ppl": 33.43385084727269,
+    "nll": 3.509568885161219,
+    "tokens": 20440,
+    "layer_linear_bytes": 380301312,
+    "model_bytes": 925015552,
+    "ideal_layer_linear_bytes": 156659712.0,
+    "quantize_seconds": 189.2750322999782
+  },
+  "W8A8 per-tensor act": {
+    "ppl": 79.51504966410351,
+    "nll": 4.375946307695542,
+    "tokens": 20440,
+    "layer_linear_bytes": 0,
+    "model_bytes": 903259648,
+    "ideal_layer_linear_bytes": 358545408.0,
+    "quantize_seconds": 1.4188571999548003
+  },
+  "W8A8 per-token act": {
+    "ppl": 18.467930403453988,
+    "nll": 2.9160357361437055,
+    "tokens": 20440,
+    "layer_linear_bytes": 0,
+    "model_bytes": 903259648,
+    "ideal_layer_linear_bytes": 358545408.0,
+    "quantize_seconds": 1.3658270000014454
+  },
+  "W8A8 per-tensor act + SmoothQuant": {
+    "ppl": 75.5687360200402,
+    "nll": 4.3250426529438295,
+    "tokens": 20440,
+    "layer_linear_bytes": 0,
+    "model_bytes": 903259648,
+    "ideal_layer_linear_bytes": 358545408.0,
+    "quantize_seconds": 32.9170124999946
+  },
+  "fp32 + int8 KV cache": {
+    "ppl": 18.937724088912077,
+    "nll": 2.941155916277443,
+    "tokens": 20440,
+    "layer_linear_bytes": 1431416832,
+    "model_bytes": 1976131072,
+    "ideal_layer_linear_bytes": 0.0,
+    "quantize_seconds": 2.6200024876743555e-05
+  },
+  "fp32 + int8 KV cache (static per-channel keys)": {
+    "ppl": 18.122782419716565,
+    "nll": 2.8971698439984404,
+    "tokens": 20440,
+    "layer_linear_bytes": 1431416832,
+    "model_bytes": 1976131072,
+    "ideal_layer_linear_bytes": 0.0,
+    "quantize_seconds": 28.634583699982613
+  }
+}

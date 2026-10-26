@@ -1,0 +1,59 @@
+{
+  "meta": {
+    "args": {
+      "url": null,
+      "spawn": "--device cuda --dtype bfloat16 --max-len 1024 --engine continuous --max-slots 16",
+      "requests": 64,
+      "concurrency": 16,
+      "rate": null,
+      "warmup": 2,
+      "prompt_words": [
+        30,
+        90
+      ],
+      "out_tokens": [
+        32,
+        64,
+        128
+      ],
+      "shared_prefix_words": 0,
+      "seed": 0,
+      "out": "results/gpu_serving_continuous_c16_rep2.json"
+    },
+    "python": "3.12.10",
+    "machine": "x86_64",
+    "mode": "closed_loop"
+  },
+  "client": {
+    "requests_sent": 64,
+    "requests_ok": 64,
+    "failures": {},
+    "output_tokens": 4704,
+    "wall_time_s": 12.911848564999996,
+    "throughput_tok_s": 364.3165404488309,
+    "request_rate_s": 4.956687625154162,
+    "ttft_p50_s": 0.05946263850000122,
+    "ttft_p95_s": 0.694896048750001,
+    "ttft_p99_s": 0.8265158387299999,
+    "tpot_p50_ms": 36.254383699517376,
+    "tpot_p95_ms": 38.68295692419353,
+    "tpot_p99_ms": 39.11003383193546,
+    "e2e_p50_s": 2.395823931999997,
+    "e2e_p95_s": 4.988096414400002,
+    "e2e_p99_s": 5.21178612342,
+    "inter_chunk_p99_ms": 61.516914510000504
+  },
+  "server": {
+    "miniserve_preemptions_total": 0.0,
+    "miniserve_prefix_cache_hit_tokens_total": 0.0,
+    "miniserve_prompt_tokens_total": 4792.0,
+    "miniserve_generation_tokens_total": 4704.0,
+    "mean_decode_batch": 12.083333333333334,
+    "prefix_hit_rate": 0.0
+  },
+  "_run": {
+    "gpu": "NVIDIA A10G",
+    "torch": "2.14.1+cu130",
+    "cuda": "13.0"
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "env": {
+    "device": "cuda",
+    "dtype": "bfloat16",
+    "cpu": "",
+    "torch": "2.14.1+cu130",
+    "threads": 4,
+    "gpu": "NVIDIA A10",
+    "weight_bytes": 988065536
+  },
+  "rows": [
+    {
+      "prompt_len": 16,
+      "outputs_identical": false,
+      "new_tokens": 64,
+      "uncached": {
+        "ttft_s": 0.015338357999997498,
+        "ms_per_token": 15.436045634920676,
+        "decode_tps": 64.7834311747381,
+        "total_s": 0.9878500039999984
+      },
+      "cached": {
+        "ttft_s": 0.016510339999999957,
+        "ms_per_token": 15.22285080952382,
+        "decode_tps": 65.69071802072536,
+        "total_s": 0.9756163579999999,
+        "cache_mb": 0.9375,
+        "effective_weight_bandwidth_gbs": 64.90673451137286
+      },
+      "speedup_total": 1.0125394022964902,
+      "speedup_decode": 1.0140049211586226,
+      "total_s_spread_cached": [
+        0.9756163579999999,
+        0.9821576254999993,
+        0.9886988929999987
+      ]
+    },
+    {
+      "prompt_len": 128,
+      "outputs_identical": false,
+      "new_tokens": 64,
+      "uncached": {
+        "ttft_s": 0.014340698999998125,
+        "ms_per_token": 14.5379210634921,
+        "decode_tps": 68.78562592496247,
+        "total_s": 0.9302733619999977
+      },
+      "cached": {
+        "ttft_s": 0.015588377000000264,
+        "ms_per_token": 14.63725007936508,
+        "decode_tps": 68.31884367472507,
+        "total_s": 0.9378166060000019,
+        "cache_mb": 2.25,
+        "effective_weight_bandwidth_gbs": 67.50349489436744
+      },
+      "speedup_total": 0.9919565894315117,
+      "speedup_decode": 0.9932139564922096,
+      "total_s_spread_cached": [
+        0.9378166060000019,
+        0.938050757500001,
+        0.9382849090000001
+      ]
+    },
+    {
+      "prompt_len": 512,
+      "outputs_identical": true,
+      "new_tokens": 64,
+      "uncached": {
+        "ttft_s": 0.01482882700000232,
+        "ms_per_token": 15.046272031746017,
+        "decode_tps": 66.46164564153217,
+        "total_s": 0.9627754109999991
+      },
+      "cached": {
+        "ttft_s": 0.016614687000000572,
+        "ms_per_token": 14.935173111111123,
+        "decode_tps": 66.95603677041034,
+        "total_s": 0.9576212820000016,
+        "cache_mb": 6.75,
+        "effective_weight_bandwidth_gbs": 66.1569523599912
+      },
+      "speedup_total": 1.0053822206094178,
+      "speedup_decode": 1.0074387434151828,
+      "total_s_spread_cached": [
+        0.9576212820000016,
+        0.9670612915000003,
+        0.976501300999999
+      ]
+    }
+  ],
+  "_run": {
+    "gpu": "NVIDIA A10",
+    "torch": "2.14.1+cu130",
+    "cuda": "13.0"
+  }
+}
