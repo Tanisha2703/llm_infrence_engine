@@ -1,0 +1,89 @@
+sampling interval 5 ms; percentages are of the samples taken for that thread
+
+===== thread engine: 1626 samples =====
+--- where the thread was (self) ---
+ 66.2%  engine.py:_sample_rows
+  8.6%  threading.py:wait
+  7.0%  model.py:forward
+  4.7%  graph_decode.py:run
+  4.1%  linear.py:forward
+  3.1%  selector_events.py:_write_to_self
+  1.7%  cache.py:update
+  1.0%  model.py:apply_rope
+  0.8%  model.py:_rotate_half
+  0.7%  cache.py:positions
+  0.4%  cache.py:reset_slot
+  0.4%  graphs.py:replay
+  0.2%  cache.py:prepare
+  0.2%  cache.py:__init__
+  0.2%  engine.py:_prefill
+  0.2%  engine.py:_sample
+  0.1%  functional.py:silu
+  0.1%  sampler.py:sample
+  0.1%  module.py:_call_impl
+  0.1%  engine.py:_admit
+  0.1%  engine.py:_decode
+--- on the stack (inclusive) ---
+100.0%  server.py:_run
+100.0%  threading.py:_bootstrap
+100.0%  threading.py:run
+100.0%  server.py:_run_guarded
+100.0%  threading.py:_bootstrap_inner
+ 91.4%  _contextlib.py:decorate_context
+ 91.4%  engine.py:step
+ 74.6%  engine.py:_decode
+ 66.2%  engine.py:_sample_rows
+ 16.8%  engine.py:_admit
+ 16.7%  engine.py:_prefill
+ 15.8%  module.py:_call_impl
+ 15.8%  model.py:forward
+ 15.8%  module.py:_wrapped_call_impl
+  8.6%  threading.py:wait
+  5.0%  graph_decode.py:run
+  4.1%  linear.py:forward
+  3.3%  engine.py:_emit
+  3.1%  server.py:_on_token
+  3.1%  selector_events.py:_write_to_self
+  3.1%  base_events.py:call_soon_threadsafe
+  3.1%  server.py:put
+
+===== thread tqdm_monitor: 1626 samples =====
+--- where the thread was (self) ---
+100.0%  threading.py:wait
+--- on the stack (inclusive) ---
+100.0%  _monitor.py:run
+100.0%  threading.py:_bootstrap_inner
+100.0%  threading.py:wait
+100.0%  threading.py:_bootstrap
+
+===== thread MainThread: 1626 samples =====
+--- where the thread was (self) ---
+ 94.8%  selectors.py:select
+  4.2%  selector_events.py:write
+  0.5%  tokenization_utils_tokenizers.py:_encode_plus
+  0.4%  selector_events.py:_read_from_self
+  0.1%  <frozen importlib._bootstrap_external>:get_data
+  0.1%  <frozen importlib._bootstrap_external>:_path_stat
+--- on the stack (inclusive) ---
+100.0%  server.py:run
+100.0%  server.py:<module>
+100.0%  base_events.py:run_until_complete
+100.0%  <frozen runpy>:_run_code
+100.0%  main.py:run
+100.0%  base_events.py:run_forever
+100.0%  server.py:main
+100.0%  runners.py:run
+100.0%  base_events.py:_run_once
+100.0%  <frozen runpy>:_run_module_as_main
+ 94.8%  selectors.py:select
+  5.2%  events.py:_run
+  4.2%  _exception_handler.py:sender
+  4.2%  selector_events.py:write
+  4.2%  h11_impl.py:send
+  4.2%  errors.py:_send
+  4.2%  _tasks.py:_run_coro
+  4.2%  responses.py:wrap
+  4.2%  responses.py:stream_response
+  0.7%  asyncexitstack.py:__call__
+  0.7%  _exception_handler.py:wrapped_app
+  0.7%  routing.py:__call__

@@ -1,0 +1,159 @@
+[
+  {
+    "date": "2026-10-21 17:46",
+    "suite": "smoke",
+    "gpu": "NVIDIA A10",
+    "container_seconds": 44,
+    "estimated_usd": 0.017,
+    "failed_jobs": []
+  },
+  {
+    "date": "2026-10-21 17:50",
+    "suite": "core",
+    "gpu": "NVIDIA A10G",
+    "container_seconds": 198,
+    "estimated_usd": 0.078,
+    "failed_jobs": [
+      "kv_cache",
+      "batching",
+      "paged",
+      "speculative"
+    ]
+  },
+  {
+    "date": "2026-10-21 18:00",
+    "suite": "core",
+    "gpu": "NVIDIA A10",
+    "container_seconds": 426,
+    "estimated_usd": 0.168,
+    "failed_jobs": []
+  },
+  {
+    "date": "2026-10-21 18:02",
+    "suite": "serving",
+    "gpu": "NVIDIA A10G",
+    "container_seconds": 98,
+    "estimated_usd": 0.039,
+    "failed_jobs": []
+  },
+  {
+    "date": "2026-10-22 18:02",
+    "suite": "tests",
+    "gpu": "none (CPU)",
+    "container_seconds": 266,
+    "estimated_usd": 0.037,
+    "failed_jobs": [
+      "pytest"
+    ]
+  },
+  {
+    "date": "2026-10-22 18:12",
+    "suite": "tests",
+    "gpu": "none (CPU)",
+    "container_seconds": 298,
+    "estimated_usd": 0.042,
+    "failed_jobs": []
+  },
+  {
+    "date": "2026-10-22 18:19",
+    "suite": "tests",
+    "gpu": "none (CPU)",
+    "container_seconds": 340,
+    "estimated_usd": 0.048,
+    "failed_jobs": []
+  },
+  {
+    "date": "2026-10-22 18:25",
+    "suite": "tests",
+    "gpu": "none (CPU)",
+    "container_seconds": 377,
+    "estimated_usd": 0.053,
+    "failed_jobs": []
+  },
+  {
+    "date": "2026-10-25 23:31",
+    "suite": "tests",
+    "gpu": "none (CPU)",
+    "container_seconds": 239,
+    "estimated_usd": 0.034,
+    "failed_jobs": []
+  },
+  {
+    "date": "2026-10-25 23:44",
+    "suite": "gputests",
+    "gpu": "NVIDIA A10",
+    "container_seconds": 16,
+    "estimated_usd": 0.006,
+    "failed_jobs": []
+  },
+  {
+    "date": "2026-10-25 23:51",
+    "suite": "graphs",
+    "gpu": "NVIDIA A10",
+    "container_seconds": 367,
+    "estimated_usd": 0.144,
+    "failed_jobs": []
+  },
+  {
+    "date": "2026-10-26 10:03",
+    "suite": "profile",
+    "gpu": "NVIDIA A10",
+    "container_seconds": 900,
+    "estimated_usd": 0.355,
+    "failed_jobs": [
+      "serve_profiled",
+      "profile_engine_thread",
+      "profile_event_loop_thread"
+    ]
+  },
+  {
+    "date": "2026-10-26 10:07",
+    "suite": "profile",
+    "gpu": "NVIDIA A10",
+    "container_seconds": 20,
+    "estimated_usd": 0.008,
+    "failed_jobs": []
+  },
+  {
+    "date": "2026-10-26 10:08",
+    "suite": "profile",
+    "gpu": "NVIDIA A10",
+    "container_seconds": 19,
+    "estimated_usd": 0.008,
+    "failed_jobs": []
+  },
+  {
+    "date": "2026-10-26 10:17",
+    "suite": "tests",
+    "gpu": "none (CPU)",
+    "container_seconds": 289,
+    "estimated_usd": 0.041,
+    "failed_jobs": [
+      "pytest"
+    ]
+  },
+  {
+    "date": "2026-10-26 10:18",
+    "suite": "gputests",
+    "gpu": "NVIDIA A10G",
+    "container_seconds": 23,
+    "estimated_usd": 0.009,
+    "failed_jobs": []
+  },
+  {
+    "date": "2026-10-26 10:23",
+    "suite": "tests",
+    "gpu": "none (CPU)",
+    "container_seconds": 304,
+    "estimated_usd": 0.043,
+    "failed_jobs": []
+  },
+  {
+    "date": "2026-10-26 10:43",
+    "suite": "smoke",
+    "gpu": "NVIDIA A10",
+    "container_seconds": 35,
+    "estimated_usd": 0.014,
+    "failed_jobs": []
+  }
+]

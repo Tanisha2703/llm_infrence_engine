@@ -1,0 +1,31 @@
+pytest on a Modal CPU container (24 cpus visible, MemTotal:       831668544 kB, Linux-4.19.0-gvisor-x86_64-with-glibc2.36)
+exit code 0, 304s, estimated $0.043
+
+[mem] after test_batching: RSS 5.33 GB
+[mem] after test_cuda_graph: RSS 5.33 GB
+[mem] after test_deploy: RSS 5.33 GB
+[mem] after test_kv_cache: RSS 5.33 GB
+[mem] after test_loadtest: RSS 5.39 GB
+[mem] after test_model_parity: RSS 5.46 GB
+[mem] after test_paged: RSS 5.46 GB
+[mem] after test_quant: RSS 5.52 GB
+[mem] after test_sampler: RSS 5.52 GB
+[mem] after test_server: RSS 5.58 GB
+[mem] after test_speculative: RSS 5.62 GB
+
+................ssss.................................................... [ 45%]
+........................................................................ [ 90%]
+...............                                                          [100%]
+155 passed, 4 skipped in 290.22s (0:04:50)
+
+[mem] after test_batching: RSS 5.33 GB
+[mem] after test_cuda_graph: RSS 5.33 GB
+[mem] after test_deploy: RSS 5.33 GB
+[mem] after test_kv_cache: RSS 5.33 GB
+[mem] after test_loadtest: RSS 5.39 GB
+[mem] after test_model_parity: RSS 5.46 GB
+[mem] after test_paged: RSS 5.46 GB
+[mem] after test_quant: RSS 5.52 GB
+[mem] after test_sampler: RSS 5.52 GB
+[mem] after test_server: RSS 5.58 GB
+[mem] after test_speculative: RSS 5.62 GB

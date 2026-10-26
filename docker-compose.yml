@@ -1,43 +1,39 @@
-version: "3.9"
-
+# The whole stack with one command:
+#
+#   docker compose up --build        (or: podman compose up --build)
+#
+#   API         http://localhost:8000      (POST /v1/completions, /v1/chat/completions, GET /health, /metrics)
+#   Grafana     http://localhost:3000      dashboard "miniserve" (login admin / admin)
+#   Prometheus  http://localhost:9090
+#
+# The first start downloads the model (~1 GB) into the "models" volume; the API answers /health once it is loaded.
+# Memory: the fp32 CPU model needs ~4 GB free for the container. For less, use bf16:  MINISERVE_DTYPE=bfloat16 docker compose up
 services:
-  inference-server:
+  miniserve:
     build: .
-    ports:
-      - "8000:8000"
+    command: ["--engine", "paged", "--max-len", "1024", "--dtype", "${MINISERVE_DTYPE:-float32}"]
+    ports: ["8000:8000"]
     volumes:
-      - ./models:/app/models:ro
-    environment:
-      MODEL_PATH: models/tinyllama-1.1b-Q4_K_M.gguf
-      N_CTX: "512"
-      N_THREADS: "4"
-      MAX_CONCURRENT: "2"
-    depends_on:
-      - prometheus
+      - models:/models
 
   prometheus:
-    image: prom/prometheus:v2.52.0
-    ports:
-      - "9090:9090"
+    image: docker.io/prom/prometheus:v2.53.0
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
-    command:
-      - "--config.file=/etc/prometheus/prometheus.yml"
-      - "--storage.tsdb.retention.time=7d"
+      - ./deploy/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./deploy/alerts.yml:/etc/prometheus/alerts.yml:ro
+    ports: ["9090:9090"]
+    depends_on: [miniserve]
 
   grafana:
-    image: grafana/grafana:10.4.2
-    ports:
-      - "3000:3000"
+    image: docker.io/grafana/grafana:11.1.0
     environment:
+      GF_SECURITY_ADMIN_USER: admin
       GF_SECURITY_ADMIN_PASSWORD: admin
-      GF_USERS_ALLOW_SIGN_UP: "false"
     volumes:
-      - grafana-data:/var/lib/grafana
-      - ./grafana/provisioning:/etc/grafana/provisioning:ro
-      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
-    depends_on:
-      - prometheus
+      - ./deploy/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./deploy/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    ports: ["3000:3000"]
+    depends_on: [prometheus]
 
 volumes:
-  grafana-data:
+  models:

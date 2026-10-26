@@ -1,0 +1,54 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  tests:
+    # The whole suite: model parity vs the reference implementation, KV cache, batching, paging, speculative sampling,
+    # quantization, server and load tester. It runs the real Qwen2.5-0.5B on the CPU runner (about 6-10 minutes).
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Cache Hugging Face downloads (model + WikiText-2)
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: hf-qwen25-05b-wikitext2-v1
+
+      - name: Install (CPU-only torch keeps the install small)
+        run: |
+          python -m pip install --upgrade pip
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -e ".[dev,eval,serve]"
+
+      - name: Test (the 1.5B-model test is marked heavy and skipped on shared runners)
+        run: pytest -q -m "not heavy"
+
+  deploy-config:
+    # Prometheus' own checker validates the alert rules and the scrape config exactly as Prometheus will read them.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: promtool check
+        run: |
+          docker run --rm -v "$PWD/deploy:/cfg:ro" --entrypoint promtool prom/prometheus:v2.53.0 check rules /cfg/alerts.yml
+
+  docker:
+    # The one-command stack must stay buildable: validate the compose file and build the server image (CPU).
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: compose file is valid
+        run: docker compose config -q
+      - name: build the server image
+        run: docker build -t miniserve:ci .
